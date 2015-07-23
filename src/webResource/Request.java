@@ -5,7 +5,10 @@ import java.util.Scanner;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
+
 import java.util.InputMismatchException;
+
+import org.json.JSONObject;
 
 //import data.MongoDb;
 
@@ -38,6 +41,7 @@ public class Request {
 			while (input != 0){
 				switch(input){
 				case 1:
+					read(objectID);
 					break;
 					
 				case 2:
@@ -79,6 +83,19 @@ public class Request {
 
 			}
 		}
+	}
+	
+	public static void read(String objectID){
+		Client client = Client.create();
+		WebResource webResource = client.resource("http://localhost:8080/CMPE273-Client/webResource/HandleRequest/Read");
+		String newInsert = "{\"ObjectID\": \""+objectID+"\"}";
+		ClientResponse response = webResource.type("application/json").post(ClientResponse.class, newInsert);
+		if(response.getStatus() != 201){
+			throw new RuntimeException("Failed HTTP error code:" + response.getStatus());
+		}
+		String output = response.getEntity(String.class);
+
+		System.out.println(output);
 	}
 	
 	public static String create(String objectID, String newInstance){
@@ -166,6 +183,9 @@ public class Request {
 	public static void menu(){
 		System.out.println("Choose one of the functions\n");
 		System.out.println("Press 0 to Shut down\n");
+		System.out.println("Press 1 to Read\n");
+		System.out.println("Press 2 to Discover\n");
+		System.out.println("Press 3 to Write\n");
 		System.out.println("Press 4 to Create\n");
 		System.out.println("Press 5 to Delete\n");
 		System.out.println("Press 6 to execute\n");
