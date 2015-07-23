@@ -48,6 +48,14 @@ public class Request {
 					break;
 					
 				case 3:
+					read(objectID);
+					System.out.println("Please input a Instance ID write");
+					String instance = scan.nextLine();
+					System.out.println("Please input the field to write");
+					String field = scan.nextLine();
+					System.out.println("Please input the value");
+					String value = scan.nextLine();
+					write(objectID, instance, field, value);
 					break;
 					
 				case 4:
@@ -96,6 +104,25 @@ public class Request {
 		String output = response.getEntity(String.class);
 
 		System.out.println(output);
+	}
+	
+	public static void discover(){
+		//========to do=====
+		// implement the function
+	}
+	
+	public static void write(String objectID, String instance, String field, String value){
+		Client client = Client.create();
+		WebResource webResource = client.resource("http://localhost:8080/CMPE273-Client/webResource/HandleRequest/Write");
+		String newInsert = "{\"ObjectID\": \""+objectID+"\", \"Instance\": \""+instance+"\", \"Field\": \""+field+"\", \"Value\": \""+value+"\"}";
+		ClientResponse response = webResource.type("application/json").post(ClientResponse.class, newInsert);
+		if(response.getStatus() != 201){
+			throw new RuntimeException("Failed HTTP error code:" + response.getStatus());
+		}
+		String output = response.getEntity(String.class);
+
+		System.out.println(output);
+		
 	}
 	
 	public static String create(String objectID, String newInstance){
@@ -170,14 +197,6 @@ public class Request {
 			else
 				return "failed";
 		}
-//		String newInsert = "{\"ObjectID\": \""+objectID+"\", \""+newInstance+"\": \""+newValue+"\"}";
-//		ClientResponse response = webResource.type("application/json").post(ClientResponse.class, newInsert);
-//		if(response.getStatus() != 201){
-//			throw new RuntimeException("Failed HTTP error code:" + response.getStatus());
-//		}
-//		String output = response.getEntity(String.class);
-//		System.out.println(output);
-//		return clientResponse;
 	}
 	
 	public static void menu(){
