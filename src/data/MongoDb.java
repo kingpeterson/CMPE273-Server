@@ -254,22 +254,25 @@ public class MongoDb {
 		return myTime;
     }
     
-    public static int update(String objectID, String newInstance, String newValue){
+    public static int update(String objectID, String newInstance, int newValue){
     	if (db == null)
     		init();
     	
     	WriteResult result = null;
 		try{
 	        DBCollection collection = db.getCollection("registration");
-	        DBObject updateData = new BasicDBObject();
-	        if (newValue.equals("-1")){
-	        	updateData.put("$unset", new BasicDBObject(newInstance, ""));
-	        }
-	        else{
-	        	updateData.put("$set", new BasicDBObject(newInstance, newValue));
-	        }
-	        DBObject query = new BasicDBObject("ObjectID", objectID);
-	    	result = collection.update(query, updateData);
+	        if (newValue == 0){ //delete
+		        BasicDBObject query = new BasicDBObject();
+		        List<BasicDBObject> obj = new ArrayList<BasicDBObject>();
+		        obj.add(new BasicDBObject("ObjectID", objectID));
+		        obj.add(new BasicDBObject("SerialNumber", newInstance));
+		        query.put("$and", obj);
+		        result = collection.remove(query);	        }
+	        else{ //add
+				String data = "{\"ObjectID\": \""+objectID+"\", \"SerialNumber\": \""+newInstance+"\", \"isRegistered\": \"0\"}";
+		    	DBObject object = (DBObject)JSON.parse(data);
+		    	result = collection.insert(object);	       
+		    }
 		} catch (MongoException e) {
 			e.printStackTrace();
 		}

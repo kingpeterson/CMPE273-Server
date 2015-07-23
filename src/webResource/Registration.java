@@ -44,8 +44,8 @@ public class Registration {
 			JSONObject obj = new JSONObject(input);
 			String objectID = obj.getString("ObjectID");
 			String newInstance = obj.getString("NewInstance");
-			String newValue = obj.getString("NewValue");
-			result = Integer.toString(MongoDb.update(objectID, newInstance, newValue));
+			int status = obj.getInt("Status");
+			result = Integer.toString(MongoDb.update(objectID, newInstance, status));
 		} catch (Exception e){
 			e.printStackTrace();
 		}
