@@ -38,12 +38,13 @@ public class Request {
 			while (input != 0){
 				switch(input){
 				case 1:
+
 					System.out.println("Please input the Instance ID to create");
 					String newInstance = scan.nextLine();
-					
+
 					System.out.println("Please input the value to create");
-	
 					String newValue = scan.nextLine();
+	
 					System.out.println(create(objectID, newInstance, newValue));
 					System.out.println("\n");
 					break;
@@ -68,6 +69,8 @@ public class Request {
 				}
 				menu();
 				input = scan.nextInt();
+				scan.nextLine();
+
 			}
 		}
 	}
