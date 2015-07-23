@@ -30,6 +30,7 @@ public class Rest {
 			JSONObject obj = new JSONObject(input);
 			String manufacturer = obj.getString("Manufacturer");
 			String serialNumber = obj.getString("SerialNumber");
+			String objectID = obj.getString("ObjectID");
 			String data = obj.getString("Data");
 			
 			String currentTime =  new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
@@ -52,7 +53,7 @@ public class Rest {
 					result = "Data received: "+data+"";
 				}
 				else{
-					MongoDb.register(manufacturer, serialNumber, 0);
+					MongoDb.register(manufacturer, serialNumber, objectID, 0);
 					result = "Registration expired, please register again";
 				}
 			}

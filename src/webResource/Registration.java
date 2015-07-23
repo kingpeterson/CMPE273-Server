@@ -22,8 +22,9 @@ public class Registration {
 			JSONObject obj = new JSONObject(input);
 			String manufacturer = obj.getString("Manufacturer");
 			String serialNumber = obj.getString("SerialNumber");
+			String objectID = obj.getString("ObjectID");
 			int status = obj.getInt("Status");
-			myTime = MongoDb.register(manufacturer, serialNumber, status);
+			myTime = MongoDb.register(manufacturer, serialNumber, objectID, status);
 			result = "Registration expiration time: "+myTime+"";
 				
 		} catch (Exception e){
@@ -33,24 +34,23 @@ public class Registration {
 		return Response.status(201).entity(result).build();
 
 	}
-//	@POST
-//	@Path("/DeRegister")
-//	@Consumes(MediaType.APPLICATION_JSON)
-//	public Response DeRegister(String input){
-//		String result = "";
-//		String myTime = "";
-//		try{
-//			JSONObject obj = new JSONObject(input);
-//			String manufacturer = obj.getString("Manufacturer");		
-//			String serialNumber = obj.getString("SerialNumber");
-//			myTime = MongoDb.register(manufacturer, serialNumber, 0);
-//			result = "DERegistration time: "+myTime+"";	
-//			
-//		} catch (Exception e){
-//			e.printStackTrace();
-//		} 
-//		return Response.status(201).entity(result).build();
-//
-//	}
+	
+	@POST
+	@Path("/Update")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response Update(String input){
+		String result = "";
+		try{
+			JSONObject obj = new JSONObject(input);
+			String objectID = obj.getString("ObjectID");
+			String newInstance = obj.getString("NewInstance");
+			String newValue = obj.getString("NewValue");
+			result = Integer.toString(MongoDb.update(objectID, newInstance, newValue));
+		} catch (Exception e){
+			e.printStackTrace();
+		}
+		
+		return Response.status(201).entity(result).build();
+	}
 	
 }

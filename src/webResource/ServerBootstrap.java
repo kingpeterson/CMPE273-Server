@@ -22,6 +22,7 @@ public class ServerBootstrap {
 			JSONObject obj = new JSONObject(input);
 			String manufacturer = obj.getString("Manufacturer");
 			String productType = obj.getString("ProductType");
+			String objectID = obj.getString("ObjectID");
 			String modelNumber = obj.getString("ModelNumber");
 			String serialNumber = obj.getString("SerialNumber");
 			String firmwareVersion = obj.getString("FirmwareVersion");
@@ -32,7 +33,7 @@ public class ServerBootstrap {
 				if (!MongoDb.searchType(productType))
 					result = "{\"found\": \"Product denied!\"}";
 				else{
-					MongoDb.insert(manufacturer, productType, modelNumber, serialNumber, firmwareVersion);
+					MongoDb.insert(manufacturer, productType, objectID, modelNumber, serialNumber, firmwareVersion);
 					result = "{\"found\": \"Product added to server\"}";
 				}
 				
