@@ -52,5 +52,4 @@ public class Registration {
 		
 		return Response.status(201).entity(result).build();
 	}
-	
 }
