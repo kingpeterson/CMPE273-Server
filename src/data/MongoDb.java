@@ -9,6 +9,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
 import org.json.*;
 
 import com.mongodb.BasicDBObject;
@@ -112,15 +114,24 @@ public class MongoDb {
     }
     
     public static void insert(String manufacturer, String productType, String objectID, String modelNumber, String serialNumber, String firmwareVersion){
-    	String data = "{\"Manufacturer\": \""+manufacturer+"\", \"ProductType\": \""+productType+"\", \"ObjectID\": \""+objectID+"\", "
-    			+ "\"ModelNumber\": \""+modelNumber+"\", \"SerialNumber\": \""+serialNumber+"\", "
-    			+ "\"FirmwareVersion\": \""+firmwareVersion+"\"}";
+//    	String data = "{\"Manufacturer\": \""+manufacturer+"\", \"ProductType\": \""+productType+"\", \"ObjectID\": \""+objectID+"\", "
+//    			+ "\"ModelNumber\": \""+modelNumber+"\", \"SerialNumber\": \""+serialNumber+"\", "
+//    			+ "\"FirmwareVersion\": \""+firmwareVersion+"\"}";
+//    	
+		JSONObject data = null;
+		try{
+			data = new JSONObject().put("Manufacturer", manufacturer).put("ProductType", productType).put("ObjectID", objectID)
+					.put("SerialNumber", serialNumber).put("FirmwareVersion", firmwareVersion);
+		}catch(JSONException e){
+			e.printStackTrace();
+		}
     	if(db == null){
     		init();
     	}
     	try{
 	        DBCollection collection = db.getCollection("bootstrap");
-	    	DBObject object = (DBObject)JSON.parse(data);
+	        String input = JSON.serialize(data);
+	    	DBObject object = (DBObject)JSON.parse(input);
 	    	collection.insert(object);
 		} catch (MongoException e) {
 			e.printStackTrace();
@@ -269,7 +280,7 @@ public class MongoDb {
 		        query.put("$and", obj);
 		        result = collection.remove(query);	        }
 	        else{ //add
-				String data = "{\"ObjectID\": \""+objectID+"\", \"SerialNumber\": \""+newInstance+"\", \"isRegistered\": \"0\"}";
+				String data = "{\"ObjectID\": \""+objectID+"\", \"SerialNumber\": \""+newInstance+"\", \"isRegistered\": \"1\"}";
 		    	DBObject object = (DBObject)JSON.parse(data);
 		    	result = collection.insert(object);	       
 		    }
