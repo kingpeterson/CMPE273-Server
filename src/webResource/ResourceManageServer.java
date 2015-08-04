@@ -203,10 +203,10 @@ public class ResourceManageServer {
 				System.out.println(input.getString("Resource")+ " changed value");
 			}
 			else if (input.getString("Compare").equals(">")){
-				System.out.println(input.getString("Resource")+ " is greater than " + input.getString("Value"));
+				System.out.println(input.getString("Resource")+ " is " +input.getString("Value") +", greater than " + input.getString("GreaterThan"));
 			}
 			else if (input.getString("Compare").equals("<"))
-				System.out.println(input.getString("Resource")+ " is less than " + input.getString("Value"));
+				System.out.println(input.getString("Resource")+ " is " +input.getString("Value")+ ", less than " + input.getString("LessThan"));
 
 		} catch (JSONException e) {
 			e.printStackTrace();

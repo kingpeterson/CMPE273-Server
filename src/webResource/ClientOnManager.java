@@ -1,5 +1,7 @@
 package webResource;
 
+import java.util.Scanner;
+
 import javax.ws.rs.core.MediaType;
 
 import org.codehaus.jettison.json.JSONObject;
@@ -228,17 +230,44 @@ public class ClientOnManager {
 	}
 	
 	public static void main(String[] args){
+		Scanner input = new Scanner(System.in);  
+
 		discover("DAIKIN", "AC", "CMPE273AC001");
+		System.out.print("Press enter to continue....\n");
+		input.hasNextLine();	
+		input = new Scanner(System.in);
+		
 		read("DAIKIN", "AC", "CMPE273AC001","Thermometer");
-		read("DAIKIN", "AC", "CMPE273AC001","wefwef");
+		System.out.print("Press enter to continue....\n");
+		input.hasNextLine();
+		input = new Scanner(System.in);
+		
+//		read("DAIKIN", "AC", "CMPE273AC001","wefwef");
 
 		execute("DAIKIN", "AC", "CMPE273AC001","Freezer", "Off");
+		System.out.print("Press enter to continue....\n");
+		input.hasNextLine();
+		input = new Scanner(System.in);
+		
 		write("DAIKIN", "AC", "CMPE273AC001","Thermometer", "4");
+		System.out.print("Press enter to continue....\n");
+		input.hasNextLine();
+		input = new Scanner(System.in);
+		
 //		create("PHILIPS", "LOCK", "CMPE273LK001", "http://localhost:8080/CMPE273-Client/webResource/ServerOnDevice");
 		observe("DAIKIN", "AC", "CMPE273AC001","Thermometer", ">", "3");
+		System.out.print("Press enter to continue....\n");
+		input.hasNextLine();
+		input = new Scanner(System.in);
+		
 //		cancelObserve("DAIKIN", "AC", "CMPE273AC001","Thermometer");
 		write("DAIKIN", "AC", "CMPE273AC001","Thermometer", "5");
+		System.out.print("Press enter to continue....\n");
+		input.hasNextLine();
+		input = new Scanner(System.in);
+		
 		cancelObserve("DAIKIN", "AC", "CMPE273AC001","Thermometer");
+		
 
 
 

@@ -56,6 +56,8 @@ public class ManagerDAO {
 	        while(cursor.hasNext()){
 				DBObject obj = cursor.next();
 					JSONObject obj2 = new JSONObject(obj.toString());
+					result.put("Manufacturer", obj2.getString("Manufacturer"));
+					result.put("Model", obj2.getString("Model"));
 					result.put("Resource", obj2.getJSONArray("Resource"));
 					result.put("ServiceProvider", obj2.getString("ServiceProvider"));
 			}
